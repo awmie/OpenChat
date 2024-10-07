@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Real-time Chat</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io();
+            let userId; // Store user ID
+            let userColor; // Store user color
+
+            // Function to send a message
+            function sendMessage() {
+                const input = document.getElementById("message");
+                const message = input.value.trim(); // Trim whitespace
+                if (message === "") {
+                    alert("Message cannot be empty!"); // Warning for empty message
+                    return false; // Prevent sending
+                }
+                console.log("Sending message:", message); // Log the message being sent
+                socket.emit("chat message", message); // Send message to server
+                input.value = ""; // Clear input
+                return false; // Prevent form submission
+            }
+
+            // Listen for user ID and color
+            socket.on("user id", (data) => {
+                userId = data.userId; // Store the user ID
+                userColor = data.userColor; // Store the user color
+            });
+
+            // Listen for incoming messages
+            socket.on("chat message", (data) => {
+                console.log("Received message:", data); // Log the received message
+                const item = document.createElement("li");
+                item.style.backgroundColor = data.userColor; // Set background color based on user color
+
+                // Create a span for user ID and message
+                const messageContent = document.createElement("span");
+                messageContent.textContent = `${data.userId}: ${data.msg}`; // Display user ID before the message
+
+                // Check if the message is from the current user or a left message
+                if (data.hasLeft) {
+                    item.className = "left-message"; // Class for left message
+                    messageContent.textContent = `${data.userId} has left the chat.`; // Custom message for user leaving
+                } else if (data.userId === userId) {
+                    item.className = "my-message"; // Class for user's message
+                } else {
+                    item.className = "message"; // Class for others' messages
+                }
+
+                // Append the message content to the list item
+                item.appendChild(messageContent);
+                document.getElementById("messages").appendChild(item); // Append it to the list
+            });
+
+            // Listen for user count updates
+            socket.on("user count", (count) => {
+                document.getElementById("user-count").textContent =
+                    `Users online: ${count}`; // Update user count
+            });
+
+            // Toggle dark mode
+            function toggleDarkMode() {
+                document.body.classList.toggle("dark-mode");
+            }
+        </script>
+    </head>
+    <body>
+        <div id="chat-container">
+            <button
+                onclick="toggleDarkMode()"
+                style="position: absolute; top: 10px; right: 10px"
+            >
+                Toggle Dark Mode
+            </button>
+            <div class="user-count" id="user-count">Users online: 0</div>
+            <!-- User count display -->
+            <ul id="messages"></ul>
+            <form id="message-form" onsubmit="return sendMessage();">
+                <input
+                    id="message"
+                    autocomplete="off"
+                    placeholder="Type your message..."
+                />
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </body>
+</html>
