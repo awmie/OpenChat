@@ -85,8 +85,13 @@ io.on("connection", (socket) => {
 });
 
 // Define the port
-const PORT = 3000;
+// const PORT = 3000;
 
+const PORT = process.env.PORT; // Use PORT provided by Vercel or default to 3000 locally
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 // Start the server
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
