@@ -5,6 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Real-time Chat</title>
         <link rel="stylesheet" href="style.css" />
+        <script
+            src="https://kit.fontawesome.com/354d48ccb6.js"
+            crossorigin="anonymous"
+        ></script>
         <script src="/socket.io/socket.io.js"></script>
         <script>
             const socket = io();
@@ -36,6 +40,7 @@
                 console.log("Received message:", data); // Log the received message
                 const item = document.createElement("li");
                 item.style.backgroundColor = data.userColor; // Set background color based on user color
+                item.style.borderRadius = "20px"; // Smooth rounded corners for message bubble
 
                 // Create a span for user ID and message
                 const messageContent = document.createElement("span");
@@ -65,27 +70,57 @@
             // Toggle dark mode
             function toggleDarkMode() {
                 document.body.classList.toggle("dark-mode");
+                const chatContainer = document.getElementById("chat-container");
+                chatContainer.classList.toggle("dark-mode");
             }
         </script>
     </head>
     <body>
-        <div id="chat-container">
-            <button
-                onclick="toggleDarkMode()"
-                style="position: absolute; top: 10px; right: 10px"
+        <div id="chat-container" style="padding: 20px">
+            <div
+                class="chat-header"
+                style="text-align: center; margin-bottom: 20px"
             >
-                Toggle Dark Mode
-            </button>
-            <div class="user-count" id="user-count">Users online: 0</div>
+                <h1>Random Chat</h1>
+                <button
+                    onclick="toggleDarkMode()"
+                    style="margin-top: 10px; border-radius: 20px"
+                >
+                    Toggle Dark Mode
+                </button>
+            </div>
+            <div class="user-count" id="user-count" style="margin-bottom: 20px">
+                Users online: 0
+            </div>
             <!-- User count display -->
-            <ul id="messages"></ul>
-            <form id="message-form" onsubmit="return sendMessage();">
+            <ul id="messages" style="margin-bottom: 20px"></ul>
+            <form
+                id="message-form"
+                onsubmit="return sendMessage();"
+                style="display: flex; gap: 10px"
+            >
                 <input
                     id="message"
                     autocomplete="off"
                     placeholder="Type your message..."
+                    style="
+                        flex: 1;
+                        padding: 10px;
+                        border-radius: 20px;
+                        border: 1px solid #ccc;
+                    "
                 />
-                <button type="submit">Send</button>
+
+                <button
+                    type="submit"
+                    style="
+                        padding: 10px 13px;
+                        border-radius: 100px;
+                        border: 1px solid #ccc;
+                    "
+                >
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
             </form>
         </div>
     </body>

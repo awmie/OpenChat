@@ -21,8 +21,8 @@ body.dark-mode {
     width: 100%;
     max-width: 800px;
     background: white; /* Light mode background */
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 20px; /* Softer corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
     overflow: hidden;
     padding: 20px;
     display: flex;
@@ -48,7 +48,7 @@ body.dark-mode #chat-container {
 #messages li {
     margin: 5px 0;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 15px; /* Softer corners */
     width: fit-content;
     max-width: 80%;
     color: black; /* Default text color */
@@ -64,6 +64,7 @@ body.dark-mode #chat-container {
     color: white; /* White text for client in both modes */
     text-align: right;
     margin-left: auto; /* Align to the right */
+    border-radius: 15px 15px 0 15px; /* Softer corners with unique shape */
 }
 
 .left-message {
@@ -91,13 +92,18 @@ body.dark-mode .left-message {
     padding: 10px;
     background: transparent; /* No background for a minimal look */
     position: relative; /* Changed to relative */
+    margin-top: 10px; /* Space between chat container and message form */
+    width: 100%; /* Full width of the container */
+    max-width: 800px; /* Match chat container's max width */
+    margin-left: auto; /* Center align if needed */
+    margin-right: auto; /* Center align if needed */
 }
 
 #message {
     flex: 1;
     padding: 10px;
     border: 2px solid #007bff; /* Keep blue border */
-    border-radius: 20px;
+    border-radius: 15px; /* Softer corners */
     margin-right: 10px;
     background-color: white; /* Light mode background */
     color: black; /* Light mode text color */
@@ -115,7 +121,7 @@ body.dark-mode #message {
 button {
     padding: 10px 15px;
     border: none;
-    border-radius: 20px;
+    border-radius: 15px; /* Softer corners */
     background-color: #007bff;
     color: white;
     cursor: pointer;
