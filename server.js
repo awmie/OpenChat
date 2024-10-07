@@ -87,7 +87,7 @@ io.on("connection", (socket) => {
 // Define the port
 // const PORT = 3000;
 
-const PORT = process.env.PORT || ea1e15; // Use PORT provided by Vercel or default to 3000 locally
+const PORT = process.env.PORT || 3000; // Use PORT provided by Vercel or default to 3000 locally
 
 // Start the server
 server.listen(PORT, () => {
